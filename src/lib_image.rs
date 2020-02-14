@@ -1,6 +1,6 @@
 #[cfg(test)]
 
-//extern crate lib_image;
+extern crate lib_image;
 pub mod image{
 	use std::path::Path;
 	use std::fs::File;
@@ -83,6 +83,9 @@ pub mod image{
 	    	for pixel in self.pixels.iter_mut(){
 				pixel.grayscale();
 			}
+	    }
+	    pub fn format(&self)->&Format{
+	    	&self.format
 	    }
 
 	    pub fn width(&self)->usize{

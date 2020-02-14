@@ -21,8 +21,20 @@ Méthodes :
 ### lib_image
 Module image avec derive(Debug)
 Méthodes : 
-* new ->
-### main.rs
+* new -> instancie une image avec : le format, la taille, la valeur max des pixels, les pixels
+* save -> sauvegarde l'image dans un fichier dont l'adresse et le format sont passé en paramètre (exemple : "mon_chemin\\ma_nouvelle_image.ppm")
+* invert -> lance la fonction "invert" des pixels pour tout les pixels de l'image
+* grayscale -> lance la fonction "grayscale" des pixels pour tout les pixels de l'image
+* eq -> compare les pixels de chaques images
+* format, width, height, max, pixels -> getters
+
+### Main
+Dans la fonction main est exécuté une commande simple de création d'une structure image puis sauvegarde de celle-ci dans un nouveau fichier.
+Ne pas oublier de changer les chemins absolus!!
+
+## Lancement des tests
+Pour pouvoir build le projet les lignes "//extern crate lib_image;" dans le fichier "lib_image.rs" (ligne 3) et "//extern crate lib_pixel;" dans le fichier "lib_pixel.rs" (ligne 3) doivent être décommentées. Puis on peu faire "cargo run" et "cargo build".
+Pour pouvoir lancer les tests (dans les fichiers lib_pixels.rs et lib_image.rs) il faut recommenter ces  lignes et lancer la commande "cargo test".
 
 ## Documentation utile
 * https://doc.rust-lang.org
