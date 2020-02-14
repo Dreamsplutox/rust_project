@@ -54,11 +54,11 @@ fn main() {
     
   	my_image_invert.invert();
 
-  	println!("{}",my_image1.eq(my_image));
+  	//println!("{}",my_image1.eq(my_image));
 
   	my_image_grayscale.grayscale();
 
-	println!("{}",my_image1.eq(my_image2));
+	//println!("{}",my_image1.eq(my_image2));
 
     let path = Path::new("D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\project\\src\\test.ppm");
     

@@ -43,7 +43,7 @@ pub mod image{
 
 		    match file.write_all(header.as_bytes()) { //insère le header dans le fichier, si erreur ==> message erreur, sinon ==> message réussite
 		        Err(why) => panic!("couldn't write header to file"),
-		        Ok(_) => println!("successfully wrote header!!"),
+		        Ok(_) => println!("successfully wrote header : \n{}",  header),
 		    }
 
 		    for pixel in self.pixels {  // parcour tout les pixels de la structure
