@@ -1,7 +1,6 @@
 #[cfg(test)]
 
-extern crate lib_pixel;
-
+//extern crate lib_pixel;
 pub mod pixel{
 
 	#[derive(Debug, Clone, Copy)]
@@ -58,4 +57,24 @@ pub mod pixel{
 	    	(self.red() == other.red()) && (self.green() == other.green()) && (self.blue() == other.blue())
 	    }
 	}
+
+	#[test]
+		pub fn test_pixel_grayscale(){
+			let val =((34 + 56 + 102) / 3) as u8;
+			let mut pixel_origin = Pixel::new(34,56,102);
+			pixel_origin.grayscale();
+			let pixel_gray = Pixel::new(val,val,val);
+			assert_eq!(pixel_origin, pixel_gray);
+		}
+		#[test]
+		pub fn test_pixel_invert(){
+			let val1 = 102;
+			let val2 = 128;
+			let val3 = 200;
+			let mut pixel_origin = Pixel::new(val1, val2, val3);
+			pixel_origin.invert();
+			let pixel_invert = Pixel::new(!val1, !val2, !val3);
+			assert_eq!(pixel_origin, pixel_invert);
+		}
+
 }

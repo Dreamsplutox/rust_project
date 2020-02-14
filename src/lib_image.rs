@@ -1,7 +1,6 @@
 #[cfg(test)]
 
-extern crate lib_image;
-
+//extern crate lib_image;
 pub mod image{
 	use std::path::Path;
 	use std::fs::File;
@@ -9,14 +8,14 @@ pub mod image{
 	use crate::lib_pixel::pixel::*;
 
 	#[derive(Debug)]
-	pub enum format{
+	pub enum Format{
         P3,
         P6,
     }
 
 	#[derive(Debug)]
 	pub struct Image{ // structure image
-	    format: format, // format
+	    format: Format, // format
 	    width: usize, 
 	    height: usize,
 	    max: u8, // val max pour chaques couleurs ==> u8 car max : 255
@@ -24,7 +23,7 @@ pub mod image{
 	}
 
 	impl Image{
-		pub fn new(format:format, width:usize, height:usize, max:u8, pixels:Vec<Pixel>) -> Self{ //constructeur
+		pub fn new(format:Format, width:usize, height:usize, max:u8, pixels:Vec<Pixel>) -> Self{ //constructeur
 	        Image{
 	            format: format, 
 			    width: width, 
@@ -95,15 +94,47 @@ pub mod image{
 	    pub fn max(&self)->u8{
 	    	self.max
 	    }
-	    pub fn pixels(self)->Vec<Pixel>{
-	    	self.pixels
+	    pub fn pixels(&self)->& Vec<Pixel>{
+	    	& self.pixels
 	    }
 
 	    pub fn eq(self, other: Image) -> bool{
-	    	self.pixels().eq(&other.pixels())
+	    	self.pixels().eq(other.pixels())
 	    }
 
 	}
+
+	#[test]
+	pub fn test_image_invert(){
+		let mut image_origin = Image::new(Format::P3, 2, 1, 255, vec![Pixel::new(34,56,102), Pixel::new(42,75,255)]);
+		let mut image_invert = Image::new(Format::P3, 2, 1, !34, vec![Pixel::new(!34,!56,!102), Pixel::new(!42,!75,!255)]);
+		
+		image_origin.invert();
+
+		assert_eq!(image_origin.pixels[0], image_invert.pixels[0]);
+		assert_eq!(image_origin.pixels[1], image_invert.pixels[1]);
+	}
+
+
+	#[test]
+	pub fn test_image_grayscale(){
+		let val1 = ((34+56+102)/3) as u8;
+		let val2 = ((42+75+255)/3) as u8;
+		let mut newmax = 0;
+		if (34+56+102)/3 > (42+75+255)/3 {
+			newmax = ((34+56+102)/3) as u8;
+		}else{
+			newmax = ((42+75+255)/3) as u8;
+		}
+		let mut image_origin = Image::new(Format::P3, 2, 1, 255, vec![Pixel::new(34,56,102), Pixel::new(42,75,255)]);
+		let mut image_grayscale = Image::new(Format::P3, 2, 1, newmax, vec![Pixel::new(val1,val1,val1), Pixel::new(val2,val2,val2)]);
+		
+		image_origin.grayscale();
+
+		assert_eq!(image_origin.pixels[0], image_grayscale.pixels[0]);
+		assert_eq!(image_origin.pixels[1], image_grayscale.pixels[1]);
+	}
+
 }
 
  

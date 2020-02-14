@@ -15,8 +15,8 @@ fn new_with_file(filename: &str)->Image{ //creation struct image avec ouverture 
     let my_lines = content.split("\n").collect::<Vec<_>>(); // iterator ==> contient toutes les lignes du fichier
 
     let format = match my_lines[0] {
-        "P3" => format::P3,
-        "P6" => format::P6,
+        "P3" => Format::P3,
+        "P6" => Format::P6,
         _ => panic!("FORMAT NOT ACCEPTED"),
     };
     let width_height = my_lines[1].split_whitespace().collect::<Vec<_>>(); //2ième ligne : les dimmensions ==> séparation pour avoir de nouveau un itérator
@@ -47,27 +47,10 @@ fn new_with_file(filename: &str)->Image{ //creation struct image avec ouverture 
 } 
 
 fn main() {
-
     let filename = "D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\rust_project\\src\\picture_P3.ppm";
     let mut saved_image:Image = new_with_file(filename);
 
-    let mut my_image:Image = new_with_file(filename);
-    let mut my_image2:Image = new_with_file(filename);
-
-    let mut my_image_invert:Image = new_with_file(filename);
-    let mut my_image_grayscale:Image = new_with_file(filename);
-    
-  	my_image_invert.invert();
-
-  	//println!("{}",my_image1.eq(my_image));
-
-  	my_image_grayscale.grayscale();
-
-	//println!("{}",my_image1.eq(my_image2));
-
     let path = Path::new("D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\rust_project\\src\\test.ppm");
-    
     saved_image.save(path); 
-
 
 }
