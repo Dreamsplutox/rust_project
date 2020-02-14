@@ -5,6 +5,7 @@ use crate::lib_image::image::*;
 mod lib_pixel;
 use crate::lib_pixel::pixel::*;
 
+
 fn new_with_file(filename: &str)->Image{ //creation struct image avec ouverture fichier
 	println!("In file {}", filename);
 
@@ -13,7 +14,11 @@ fn new_with_file(filename: &str)->Image{ //creation struct image avec ouverture 
 
     let my_lines = content.split("\n").collect::<Vec<_>>(); // iterator ==> contient toutes les lignes du fichier
 
-    let format = my_lines[0].to_string(); //première ligne en string ==> le format
+    let format = match my_lines[0] {
+        "P3" => format::P3,
+        "P6" => format::P6,
+        _ => panic!("FORMAT NOT ACCEPTED"),
+    };
     let width_height = my_lines[1].split_whitespace().collect::<Vec<_>>(); //2ième ligne : les dimmensions ==> séparation pour avoir de nouveau un itérator
     //récupéation des dimmensions
     let width = width_height[0].parse::<usize>().unwrap(); 
@@ -43,7 +48,7 @@ fn new_with_file(filename: &str)->Image{ //creation struct image avec ouverture 
 
 fn main() {
 
-    let filename = "D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\project\\src\\picture_P3.ppm";
+    let filename = "D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\rust_project\\src\\picture_P3.ppm";
     let mut saved_image:Image = new_with_file(filename);
 
     let mut my_image:Image = new_with_file(filename);
@@ -60,11 +65,9 @@ fn main() {
 
 	//println!("{}",my_image1.eq(my_image2));
 
-    let path = Path::new("D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\project\\src\\test.ppm");
+    let path = Path::new("D:\\Documents\\4ieme_annee\\langage_Rust\\Code\\rust_project\\src\\test.ppm");
     
-    saved_image.save(path);
-
-
+    saved_image.save(path); 
 
 
 }

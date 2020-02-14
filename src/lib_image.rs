@@ -9,8 +9,14 @@ pub mod image{
 	use crate::lib_pixel::pixel::*;
 
 	#[derive(Debug)]
+	pub enum format{
+        P3,
+        P6,
+    }
+
+	#[derive(Debug)]
 	pub struct Image{ // structure image
-	    format: String, // format, par exemple : P3
+	    format: format, // format
 	    width: usize, 
 	    height: usize,
 	    max: u8, // val max pour chaques couleurs ==> u8 car max : 255
@@ -18,7 +24,7 @@ pub mod image{
 	}
 
 	impl Image{
-		pub fn new(format:String, width:usize, height:usize, max:u8, pixels:Vec<Pixel>) -> Self{ //constructeur
+		pub fn new(format:format, width:usize, height:usize, max:u8, pixels:Vec<Pixel>) -> Self{ //constructeur
 	        Image{
 	            format: format, 
 			    width: width, 
@@ -30,9 +36,8 @@ pub mod image{
 
 		pub fn save(self, path: &Path){ // sauvegarde la structure dans un fichier à l'adresse "path"
 			let mut count:usize = 0; //compteur 
-
 			let header = format!( //récupère tout ce qui n'est pas des pixels et le met sous forme d'une String
-	            "{}\n{} {}\n{}\n",
+	            "{:?}\n{} {}\n{}\n",
 	            self.format, self.width, self.height, self.max
 	    	);
 
@@ -43,7 +48,7 @@ pub mod image{
 
 		    match file.write_all(header.as_bytes()) { //insère le header dans le fichier, si erreur ==> message erreur, sinon ==> message réussite
 		        Err(why) => panic!("couldn't write header to file"),
-		        Ok(_) => println!("successfully wrote header : \n{}",  header),
+		        Ok(_) => println!("successfully wrote header : \n{}", header),
 		    }
 
 		    for pixel in self.pixels {  // parcour tout les pixels de la structure
@@ -81,9 +86,6 @@ pub mod image{
 			}
 	    }
 
-	    pub fn format(self)->String{
-	    	self.format
-	    }
 	    pub fn width(&self)->usize{
 	    	self.width
 	    }
